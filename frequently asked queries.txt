@@ -1,0 +1,257 @@
+Standards we follow:-
+
+1. Naming convention
+2. metadata scan
+3. context param (mandate) AND no hardcoding
+4. null handling & heap issue 
+5. logs and stats
+6. mail notifications
+7. if input is file use schema compliance check component
+8. if you use connection component use close connection at the end
+9. best pratices performance tuning
+
+
+performance tuning
+---------------------------------------------------------------------
+1.multi thread / tparallize
+2.enable parallel on iterate link
+3.oracleinput
+1. parallel hint   ---->    /*+parallel(4)*/
+2. creating indexes on key columns
+3. input advanced setting increase the cursor size/fetch size
+
+4.toracleoutput
+1.increase the commit size in advanced setting
+2.increase the batch size in advanced setting
+when you have more inserts use "insert or update"
+when you have more updates use "update or insert"
+drop the index before loading and create indexes after loading
+
+5.TRUNCATE AND LOAD WE CAN USE BULK
+
+
+TMAP:-
+====
+
+1. We can use it as tFilterRow
+2. We can use it as tReplicate (One input and Many output)
+3. We can use it as tFilterColumn (We can remove and re-arrange the columns)
+4. We can perform String Handling Functions.
+5. We can perform Date Functions.
+6. We can Handle Nulls - Relational.ISNULL()
+7. We can generate Sequence - Numeric.Sequence("S1",1,1)
+8. We can create new columns (Calc fields/Hard coded values)
+9. We can change the Date patterns.
+10. We can create Variables and Re-use them when ever required.
+11. We can perform Math functions.
+12. We can perform Joins(Inner and Left outer) - By doing workaround we can achieve Right anf Full outer Joins
+13. We have lookup models like Load once and Reload at Each row
+14. When we are facing Heam memory issue or MemoryOutOfBound :- Increase JVM Parameters (Run tab --> Advance Settings)
+15. Store temp data as true - To do the look up in your ROM
+16. We can capture Output reject data.
+17. We can capture Inner join Reject data.
+
+
+6. enable parallel lookup in tmap
+-----------------------------------------------
+scheduling in unix
+
+crontab  
+
+-------------------------------------------------
+select *, LAG(salary, 1, 0) OVER (sal partion by deptno) +sal as running_total from emp
+
+select *,count(Child_gender) as count from (
+select * from table where Child_gender='male'
+union all
+select * from table where Child_gender='female') groupby Child_gender having count>1
+
+-->5th Highest Salary (Nth Highest Salary)
+SELECT name, dept , salary,
+		RANK() OVER(
+			PARTITION BY dept
+			ORDER BY salary DESC)   as rank_sal
+FROM 
+	emp where rank_sal=5 ;
+	
+	
+select product,count over(product partion by product) as countfrom
+table where count >1
+	
+	select id, name, subject, marks,
+	RANK() OVER(PARTITION BY subject	ORDER BY marks DESC)  as top_mark
+			from student where top_mark=1
+	
+	SELECT ename, dept , salary,
+		RANK() OVER(ORDER BY salary DESC)   as rank_sal
+FROM 
+	emp where rank_sal=2 ;
+	
+------------------------------------------------------------
+	
+	
+	SELECT emp_id,name,sal,deptno,
+		avg() OVER(
+			PARTITION BY deptno)   as average
+FROM 
+	emp
+	
+	
+--------------------------------------------------------------
+
+	
+	SELECT table1.column, table2.column
+FROM table1
+LEFT OUTER JOIN table2
+ON (table1.column = table2.column);
+
+
+
+
+601441934
+
+remove duplicates from table
+---------------------------------------------------------
+	DELETE FROM emp WHERE rowid not in 
+(SELECT MIN(rowid) FROM emp GROUP BY key columns)
+	
+how to identify duplicates in table	
+-------------------------------------------------------
+
+select count(keycolumn)  as count from table groupby keycolumn having count>1
+
+-----------------------------------------------------
+DIFF BETWEEN RANK DENSERANK ROWNUM
+
+
+      rank     densrank    ROWNUM
+1000     1       1          1
+1500     2       2          2
+1500     2       2          3
+1500     2       2          4
+2000     5       3          5
+
+
+
+-----------------------------------------------------
+
+
+
+Table A
+Col1
+1
+1
+NULL
+
+Table B
+Col1
+1 
+1
+NULL
+
+
+Output:
+Inner Join-4
+Left Join-5
+Right Join-5
+Full Join-6
+
+
+
+ID	C1	C2	C3
+1	Red	Yellow	Blue
+2	NULL	Red	Green
+3	Yellow	NULL	Violet
+Print the rows which have ‘Yellow’ in one of the columns C1, C2, or C3, but without using OR.
+
+
+Order of execution of a Query
+------------------------------------
+FROM and JOIN s. The FROM clause,
+ and subsequent JOIN s are first executed to determine
+ the total working set of data that is being queried. ...
+WHERE. ...
+GROUP BY. ...
+HAVING. ...
+SELECT. ...
+DISTINCT. ...
+ORDER BY. ...
+LIMIT / OFFSET.
+
+
+
+
+
+
+1.Talend Enterprise Edition over view and Talend  big data over view
+
+2.Talend administration center (TAC)----> 
+  I.pull and merge,
+ II.job conductor,
+ III.trigger ,
+ IV.publisher
+ 
+3.realtime how to crack interview etc
+
+***** with respect to dimensions only we derive fact
+
+diff bw start schema and snow flake schema
+
+
+Conformed dimension: is the same dimension used in different facts and has the same meaning ex: CustomerID.
+
+Role-Playing dimension: is the same dimension which used multiple times within the same fact but with different meanings ex: Date.
+
+
+Input:
+ID
+1
+1
+1
+2
+3
+4
+4
+
+Output:
+ID
+1
+1
+1
+4
+4
+
+Output2:
+ID
+2
+3
+
+
+[2:43 PM] PankajR Rane
+    employee_id, salary
+10, 1000
+20, 2000
+30, 3000
+40, 5000
+
+Output
+employee_id, salary, cumulative_sum
+10, 1000, 1000
+20, 2000, 3000
+30, 3000, 6000
+40, 5000, 11000
+
+==================================================================
+
+
+What is The Difference Between “insert or update” and “update or insert”
+
+The primary difference between the two is the sequence of actions:
+
+insert or update: Here, Talend seeks to insert a record and updates it if it finds a matching primary key existing.
+
+update or insert: Here, Talend first seeks to update a record and looks for the matching primary key. If it doesn’t find an existing matching key, it inserts the record.
+
+
+Collace :- Return the first non-null value in a list
+

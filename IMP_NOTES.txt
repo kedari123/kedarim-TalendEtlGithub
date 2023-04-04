@@ -1,0 +1,56 @@
+Best practices:
+--------------
+
+1. Naming Convenctions.
+2. Metadata scan.
+3. Context Parameters(Mandatory) and No Hardcoding of values.
+4. Null handling.
+5. Logs and Stat tables.
+6. If it is a File --> Schema check.(tSchemaComplainceCheck)
+7. Email notifications. 
+
+
+Performance Tuning Techniques:-
+-----------------------------
+
+1. Multi thread execution.
+2. Iterate link - Parallel Execution.
+3. JVM parameters
+4. Store temp data - tMap
+5. Sort on disk - tSortRow
+
+6. Input is DB:
+    a)create index on top of key columns.
+	b)parallel hint - /*+parallel(4)*/
+	c)fetch size/cursor size
+	
+7. output as DB:
+	a)commit size
+	b)batch size
+	
+	
+TMAP:-
+====
+
+1. We can use it as tFilterRow
+2. We can use it as tReplicate (One input and Many output)
+3. We can use it as tFilterColumn (We can remove and re-arrange the columns)
+4. We can perform String Handling Functions.
+5. We can perform Date Functions.
+6. We can Handle Nulls - Relational.ISNULL()
+7. We can generate Sequence - Numeric.Sequence("S1",1,1)
+8. We can create new columns (Calc fields/Hard coded values)
+9. We can change the Date patterns.
+10. We can create Variables and Re-use them when ever required.
+11. We can perform Math functions.
+12. We can perform Joins(Inner and Left outer) - By doing workaround we can achieve Right anf Full outer Joins
+13. We have lookup models like Load once and Reload at Each row
+14. When we are facing Heap memory issue or MemoryOutOfBound :- Increase JVM Parameters (Run tab --> Advance Settings)
+15. Store temp data as true - To do the look up in your ROM
+16. We can capture Output reject data.
+17. We can capture Inner join Reject data.
+18. Join N no.of tables (One main and remaining are lookups)
+
+
+TJoin:-
+=====

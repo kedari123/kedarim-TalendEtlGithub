@@ -1,0 +1,42 @@
+1. need an extra column in the target called 
+mailid_valid_flag -----> YES or NO
+
+
+2. need and extra columnin the target called
+ename_valid_flag ------->YES or NO
+
+3. need 4 files in the output
+mob num starts with 91--> india.txt
+mob num starts with 01--> usa.txt
+					02--> canada.txt
+					04--> uk.txt
+					
+					
+4.need an extra column in the target called 
+country 
+mob num starts with 91 --> INDIA
+                    01 -->USA
+					02 --->canada
+					04 --->UK else invalid country	
+					
+					
+5.need 2 extra columns in the output mail_name,domain_name
+ex:- maheshtalend@gmail.com
+	 1. mail_name ----> maheshtalend
+	 2. domain_name ----> gmail.com
+	 
+
+
+6.ename lenght should fixed to 20
+              mahesh
+			    ravi
+				
+				
+7. eno lenght is fixed to 10
+0000000100
+0000001234
+0000056743
+
+8.proper mobnum in one output improper into another 
+need an extra column in the improper flow column name is "Reject_reason"
+"this rec rejected beacuse mob num length should be 12 but it has "+13

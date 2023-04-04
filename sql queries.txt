@@ -1,0 +1,98 @@
+**********      self_join      ********
+select req.col_name from employee e1,employee e2 where e1.sal=e2.sal and e1.empname<>e2.empname
+
+**********    ROW_NUMBER,DENSE_RANK,RANK  **********
+WITH RESULT AS
+(
+SELECT (ROW_NUMBER) or (DENSE_RANK) or (RANK) OVER(ORDER BY COL_NAME) AS RANK_NO FROM TABLE.NAME 
+)
+SELECT COL.NAME WHERE RANK_NO=REQUIREMENT.
+
+******************* 'N'TH HIGHEST SALARY ****************
+IF TABLE IS "  EMP  "
+WITH EMP_RESULT AS
+(
+  SELECT *,DENSE_RANK() OVER (ORDER BY Salary DESC) AS SAL_RNK FROM EMP
+)
+SELECT DISTINCT SALARY FROM EMP_RESULT WHERE SAL_RNK='N'
+
+SELECT SALARY FROM EMP E1 WHERE N-1 = (SELECT COUNT(DISTINCT SALARY) FROM EMP E2 WHERE E2.Salary > E1.SALARY) 
+
+
+*********************** REMOVING DUPLICATES ******************
+with result as
+(
+select *, ROW_NUMBER () over (partition by col.name order by col.name) as Rownumber from employee 
+)
+delete from result where Rownumber > 1
+
+********************** DIFF BETWEEN ROW_NUMBER && RANK && DENSE_RANK ***********************
+      RANK     DENSE_RANK    ROW_NUMBER
+1000     1           1          1
+1500     2           2          2
+1500     2           2          3
+1500     2           2          4
+2000     5           3          5
+FOR THESE ABOVE 3 FUNCTIONS " ORDER BY " CLAUSE IS MANDATORY & " PARTITION BY " CLAUSE IS OPTIONAL
+****************** QUERY TO IDENTIFY THE DUPLICATES **********************
+
+SELECT COUNT(COL.NAME) AS COL_COUNT FROM TABLE.NAME GROUP BY COL.NAME WHERE COL_COUNT > 1
+
+************************* DISPLAYING ROWS WITHOUT USING "OR" *********************
+ THE TABLE COLOURS HAVING COLUMNS AS
+
+ID	C1	C2	C3
+1	RED	YELLOW	BLUE
+2	NULL	RED	GREEN
+3	YELLOW	NULL	VIOLET
+
+PRINT THE ROWS WHICH HAVE ‘YELLOW’ IN ONE OF THE COLUMNS C1, C2, OR C3, BUT WITHOUT USING OR.
+
+QUERY :-
+
+SELECT * FROM COLOURS
+EXCEPT
+SELECT * FROM COLOURS WHERE (COL1<>'YELLOW' and COL2<>'YELLOW' and COL3<>'YELLOW')
+
+***************************** JOINS ***********************************
+LEFT OUTER JOIN:-
+SELECT * FROM TABLE1 LEFT OUTER JOIN TABLE2 ON TABLE1.KEYCOLUMN=TABLE2.KEYCOLUMN
+
+RIGHT OUTER JOIN:-
+SELECT * FROM TABLE1 RIGHT OUTER JOIN TABLE2 ON TABLE1.KEYCOLUMN=TABLE2.KEYCOLUMN
+
+FULL OUTER JOIN:-
+SELECT * FROM TABLE1 FULL OUTER JOIN TABLE2 ON TABLE1.KEYCOLUMN=TABLE2.KEYCOLUMN
+
+INNER JOIN:-
+SELECT * FROM TABLE1 INNER JOIN TABLE2 ON TABLE1.KEYCOLUMN=TABLE2.KEYCOLUMN
+
+CROSS JOIN:-
+SELECT * FROM TABLE1,TABLE2 
+
+
+Degenerate Dimension– A degenerate dimension is when the dimension attribute is stored as part of the fact table and not in a separate table.
+Junk Dimension– It is a single table with a combination of different and unrelated attributes to avoid having a large number of foreign keys in the fact table.
+
+
+A clustered index defines the order in which data is physically stored in a table. Table data can be sorted in only way, therefore, there can be only one clustered index per table. 
+In SQL Server, the primary key constraint automatically creates a clustered index on that particular column.
+
+
+A non-clustered index doesn’t sort the physical data inside the table. In fact, a non-clustered index is stored at one place and table data is stored in another place.
+This is similar to a textbook where the book content is located in one place and the index is located in another. 
+This allows for more than one non-clustered index per table.
+
+
+supply........>>>   recieving && storage && shipping    ..........>>>demand    this is basic design for data warehouse.
+
+
+............diff between function & stored procedure.....
+
+In SQL: A Procedure allows SELECT as well as DML ( INSERT , UPDATE , DELETE ) statements in it, whereas Function allows only SELECT statement in it. 
+Procedures can not be utilized in a SELECT statement, whereas Functions can be embedded in a SELECT statement.
+.The function must return a value but in Stored Procedure it is optional. Even a procedure can return zero or n values.
+.Functions can have only input parameters for it whereas Procedures can have input or output parameters.
+.Functions can be called from Procedure whereas Procedures cannot be called from a Function.
+
+

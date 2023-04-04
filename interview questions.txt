@@ -1,0 +1,23 @@
+Talend:
+
+1) What are the various types of connections available in Talend?
+2) Differentiate between ‘Built-in’ and ‘Repository’?
+3) How can you run multiple sub jobs parallelay in talend?
+4) What is tUniqrow component in Talend?
+5) What is the use of outline view in Talend?
+6) What is the diffrenece between tMap and tJoin in Talend?
+7) How to pass the context variables to the Talend job from a file?
+8) Difference between datamart and Data ware house?
+9) What is ETL ?
+10) What is the difference between ETL and ELT
+
+DWH:
+
+11) What is star schema and Snowflake schema?
+12)How can you rate your self in SQL out of 5?
+
+SQL:
+
+13)How to find duplicates in a table?
+14)How to find 2nd highest salary from a table?
+15)What is the difference between view and matarialised view?
