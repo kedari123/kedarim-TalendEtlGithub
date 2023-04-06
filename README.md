@@ -1,2 +1,2 @@
-# kedarim-TalendEtlGithub
+# kedari-TalendEtlGithub
 gitgub
